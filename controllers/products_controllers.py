@@ -11,7 +11,7 @@ def read_products_by_id(id):
 
 
 def get_all_products():
-    return jsonify({'message': 'products found', "result": product_records})
+    return jsonify({'message': 'products found', "result": product_records}), 200
 
 
 def read_products_by_active(active):
@@ -24,7 +24,10 @@ def add_product():
     data = request.form if request.form else request.json
     product = {}
 
-    product['product_id'] = data['product_id']
+    highest_id = max([p.get('product_id', 0) for p in product_records])
+
+    product['product_id'] = highest_id + 1
+
     product['product_name'] = data['name']
     product['price'] = data['price']
     product['description'] = data['description']
@@ -48,7 +51,7 @@ def update_product(product_id):
     product['price'] = data.get('price', product['price'])
     product['active'] = data.get('active', product['active'])
 
-    return jsonify({'message': 'product updated', 'result': data})
+    return jsonify({'message': 'product updated', 'result': data}), 200
 
 
 def delete_product(product_id):

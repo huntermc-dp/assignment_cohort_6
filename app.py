@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, register_blueprint
+from flask import Flask, jsonify
 
 from routes.product_routes import product
 
